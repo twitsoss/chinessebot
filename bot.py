@@ -1,18 +1,23 @@
 import logging
+import time
+
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
+from db import init_db, get_user_role, add_user_to_db
+
 logging.basicConfig(level=logging.INFO)
 
 # Замените 'YOUR_BOT_TOKEN' на токен вашего бота
-API_TOKEN = 'YOUR_BOT_TOKEN'
+API_TOKEN = 'YOUR TOKEN HERE'
 
 # init bot
 bot = Bot(token=API_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 dp = Dispatcher()
+init_db()
 
 # Keyboard create
 def create_keyboard():
@@ -38,6 +43,18 @@ def create_keyboard():
 @dp.message(Command("start"))
 async def cmd_start(message: types.Message):
     # Отправляем приветственное сообщение с клавиатурой
+    telegram_id = message.from_user.id
+    first_name = message.from_user.first_name
+    last_name = message.from_user.last_name
+    username = message.from_user.username
+    created_time = int(time.time())
+
+
+
+    role = get_user_role(telegram_id)
+    if role is None:
+        add_user_to_db(telegram_id,username,first_name,last_name,created_time,created_time,created_time,'your method for inv link,','default','default',0,0,'0',0,0,0,0,0)
+    await message.answer(f'Твоя роль - {role}')
     await message.answer("Привет! Выберите действие:", reply_markup=create_keyboard())
 
 # Обработчик для кнопки "AL工具箱"
