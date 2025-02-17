@@ -8,7 +8,7 @@ from aiogram.utils.keyboard import ReplyKeyboardBuilder
 logging.basicConfig(level=logging.INFO)
 
 # Замените 'YOUR_BOT_TOKEN' на токен вашего бота
-API_TOKEN = 'YOUR_BOT_TOKEN'
+API_TOKEN = '8011844302:AAHWTIv7AFjHofzUKV8anKyne8cElkJQHxg'
 
 # init bot
 bot = Bot(token=API_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
@@ -18,7 +18,7 @@ dp = Dispatcher()
 def create_keyboard():
     builder = ReplyKeyboardBuilder()
     builder.row(
-        types.KeyboardButton(text="AL工具箱"),
+        types.KeyboardButton(text="AI工具箱"),
         types.KeyboardButton(text="购买卡密")
     )
     builder.row(
